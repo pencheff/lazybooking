@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://booking" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://booking" xmlns:intf="http://booking" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://booking" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getFreeSeatsCount">
+    <complexType>
+     <sequence>
+      <element name="movie" type="impl:Movie"/>
+      <element name="date" type="xsd:dateTime"/>
+      <element name="projection" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_dateTime">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:dateTime"/>
+    </sequence>
+   </complexType>
+   <complexType name="Movie">
+    <sequence>
+     <element name="cinemaId" type="xsd:int"/>
+     <element name="cinemaName" nillable="true" type="xsd:string"/>
+     <element name="country" nillable="true" type="xsd:string"/>
+     <element name="description" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:int"/>
+     <element name="length" type="xsd:int"/>
+     <element name="name" nillable="true" type="xsd:string"/>
+     <element name="projections" nillable="true" type="impl:ArrayOf_xsd_dateTime"/>
+     <element name="year" type="xsd:int"/>
+    </sequence>
+   </complexType>
+   <element name="getFreeSeatsCountResponse">
+    <complexType>
+     <sequence>
+      <element name="getFreeSeatsCountReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllMoviesByDate">
+    <complexType>
+     <sequence>
+      <element name="date" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllMoviesByDateResponse">
+    <complexType>
+     <sequence>
+      <element name="getAllMoviesByDateReturn" type="impl:ArrayOf_xsd_anyType"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_anyType">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <element name="getAllMovieProjections">
+    <complexType>
+     <sequence>
+      <element name="movie" type="impl:Movie"/>
+      <element name="date" type="xsd:dateTime"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getAllMovieProjectionsResponse">
+    <complexType>
+     <sequence>
+      <element name="getAllMovieProjectionsReturn" type="impl:ArrayOf_xsd_anyType"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProjections">
+    <complexType/>
+   </element>
+   <element name="getProjectionsResponse">
+    <complexType>
+     <sequence>
+      <element name="getProjectionsReturn" type="impl:ArrayOf_xsd_anyType"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="saveSeats">
+    <complexType>
+     <sequence>
+      <element name="movie" type="impl:Movie"/>
+      <element name="date" type="xsd:dateTime"/>
+      <element name="projection" type="xsd:int"/>
+      <element name="seatsCount" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="saveSeatsResponse">
+    <complexType/>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getAllMoviesByDateResponse">
+
+      <wsdl:part element="impl:getAllMoviesByDateResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllMovieProjectionsResponse">
+
+      <wsdl:part element="impl:getAllMovieProjectionsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProjectionsResponse">
+
+      <wsdl:part element="impl:getProjectionsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getFreeSeatsCountRequest">
+
+      <wsdl:part element="impl:getFreeSeatsCount" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllMovieProjectionsRequest">
+
+      <wsdl:part element="impl:getAllMovieProjections" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getAllMoviesByDateRequest">
+
+      <wsdl:part element="impl:getAllMoviesByDate" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveSeatsRequest">
+
+      <wsdl:part element="impl:saveSeats" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getFreeSeatsCountResponse">
+
+      <wsdl:part element="impl:getFreeSeatsCountResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProjectionsRequest">
+
+      <wsdl:part element="impl:getProjections" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveSeatsResponse">
+
+      <wsdl:part element="impl:saveSeatsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="BookingWebService">
+
+      <wsdl:operation name="getFreeSeatsCount">
+
+         <wsdl:input message="impl:getFreeSeatsCountRequest" name="getFreeSeatsCountRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getFreeSeatsCountResponse" name="getFreeSeatsCountResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllMoviesByDate">
+
+         <wsdl:input message="impl:getAllMoviesByDateRequest" name="getAllMoviesByDateRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllMoviesByDateResponse" name="getAllMoviesByDateResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllMovieProjections">
+
+         <wsdl:input message="impl:getAllMovieProjectionsRequest" name="getAllMovieProjectionsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getAllMovieProjectionsResponse" name="getAllMovieProjectionsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProjections">
+
+         <wsdl:input message="impl:getProjectionsRequest" name="getProjectionsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getProjectionsResponse" name="getProjectionsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveSeats">
+
+         <wsdl:input message="impl:saveSeatsRequest" name="saveSeatsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveSeatsResponse" name="saveSeatsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="BookingWebServiceSoapBinding" type="impl:BookingWebService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getFreeSeatsCount">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getFreeSeatsCountRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getFreeSeatsCountResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllMoviesByDate">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllMoviesByDateRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllMoviesByDateResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getAllMovieProjections">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getAllMovieProjectionsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getAllMovieProjectionsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProjections">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProjectionsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProjectionsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveSeats">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveSeatsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveSeatsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="BookingWebServiceService">
+
+      <wsdl:port binding="impl:BookingWebServiceSoapBinding" name="BookingWebService">
+
+         <wsdlsoap:address location="http://localhost:8080/LazyBooking/services/BookingWebService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

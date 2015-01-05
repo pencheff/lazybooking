@@ -1,0 +1,148 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from BookingWebServiceService WSDL service -->
+
+  <service name="BookingWebService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://booking"/>
+      <parameter name="wsdlServiceElement" value="BookingWebServiceService"/>
+      <parameter name="schemaQualified" value="http://booking"/>
+      <parameter name="wsdlServicePort" value="BookingWebService"/>
+      <parameter name="className" value="booking.BookingWebServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="BookingWebService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getFreeSeatsCount" qname="operNS:getFreeSeatsCount" xmlns:operNS="http://booking" returnQName="retNS:getFreeSeatsCountReturn" xmlns:retNS="http://booking" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:movie" xmlns:pns="http://booking" type="tns:Movie" xmlns:tns="http://booking"/>
+        <parameter qname="pns:date" xmlns:pns="http://booking" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:projection" xmlns:pns="http://booking" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAllMoviesByDate" qname="operNS:getAllMoviesByDate" xmlns:operNS="http://booking" returnQName="retNS:getAllMoviesByDateReturn" xmlns:retNS="http://booking" returnType="rtns:ArrayOf_xsd_anyType" xmlns:rtns="http://booking" returnItemQName="tns:item" xmlns:tns="http://booking" soapAction="" >
+        <parameter qname="pns:date" xmlns:pns="http://booking" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getAllMovieProjections" qname="operNS:getAllMovieProjections" xmlns:operNS="http://booking" returnQName="retNS:getAllMovieProjectionsReturn" xmlns:retNS="http://booking" returnType="rtns:ArrayOf_xsd_anyType" xmlns:rtns="http://booking" returnItemQName="tns:item" xmlns:tns="http://booking" soapAction="" >
+        <parameter qname="pns:movie" xmlns:pns="http://booking" type="tns:Movie" xmlns:tns="http://booking"/>
+        <parameter qname="pns:date" xmlns:pns="http://booking" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getProjections" qname="operNS:getProjections" xmlns:operNS="http://booking" returnQName="retNS:getProjectionsReturn" xmlns:retNS="http://booking" returnType="rtns:ArrayOf_xsd_anyType" xmlns:rtns="http://booking" returnItemQName="tns:item" xmlns:tns="http://booking" soapAction="" >
+      </operation>
+      <operation name="saveSeats" qname="operNS:saveSeats" xmlns:operNS="http://booking" soapAction="" >
+        <parameter qname="pns:movie" xmlns:pns="http://booking" type="tns:Movie" xmlns:tns="http://booking"/>
+        <parameter qname="pns:date" xmlns:pns="http://booking" type="tns:dateTime" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:projection" xmlns:pns="http://booking" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:seatsCount" xmlns:pns="http://booking" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="getProjections getFreeSeatsCount saveSeats getAllMovieProjections getAllMoviesByDate"/>
+
+      <arrayMapping
+        xmlns:ns="http://booking"
+        qname="ns:ArrayOf_xsd_anyType"
+        type="java:java.lang.Object[]"
+        innerType="cmp-ns:anyType" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>getAllMovieProjections"
+        type="java:booking.GetAllMovieProjections"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>getFreeSeatsCount"
+        type="java:booking.GetFreeSeatsCount"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>saveSeatsResponse"
+        type="java:booking.SaveSeatsResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>getFreeSeatsCountResponse"
+        type="java:booking.GetFreeSeatsCountResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://booking"
+        qname="ns:ArrayOf_xsd_dateTime"
+        type="java:java.util.Calendar[]"
+        innerType="cmp-ns:dateTime" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:Movie"
+        type="java:booking.Movie"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>getAllMoviesByDate"
+        type="java:booking.GetAllMoviesByDate"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>saveSeats"
+        type="java:booking.SaveSeats"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>getAllMoviesByDateResponse"
+        type="java:booking.GetAllMoviesByDateResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>getProjections"
+        type="java:booking.GetProjections"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>getProjectionsResponse"
+        type="java:booking.GetProjectionsResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://booking"
+        qname="ns:>getAllMovieProjectionsResponse"
+        type="java:booking.GetAllMovieProjectionsResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from BookingWebServiceService WSDL service -->
+
+  <service name="BookingWebService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://booking"/>
+      <parameter name="wsdlServiceElement" value="BookingWebServiceService"/>
+      <parameter name="schemaQualified" value="http://booking"/>
+      <parameter name="wsdlServicePort" value="BookingWebService"/>
+      <parameter name="className" value="booking.BookingWebService"/>
+      <parameter name="wsdlPortType" value="BookingWebService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://booking" xmlns:retNS="http://booking" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getFreeSeatsCount" qname="operNS:getFreeSeatsCount" returnQName="retNS:getFreeSeatsCountReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://booking" xmlns:tns="http://booking" qname="pns:movie" type="tns:Movie"/>
+        <parameter xmlns:pns="http://booking" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:date" type="tns:dateTime"/>
+        <parameter xmlns:pns="http://booking" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:projection" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://booking" xmlns:retNS="http://booking" xmlns:rtns="http://booking" xmlns:tns="http://booking" name="getAllMoviesByDate" qname="operNS:getAllMoviesByDate" returnQName="retNS:getAllMoviesByDateReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://booking" qname="pns:date" type="tns:dateTime"/>
+      </operation>
+      <operation xmlns:operNS="http://booking" xmlns:retNS="http://booking" xmlns:rtns="http://booking" xmlns:tns="http://booking" name="getAllMovieProjections" qname="operNS:getAllMovieProjections" returnQName="retNS:getAllMovieProjectionsReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+        <parameter xmlns:pns="http://booking" qname="pns:movie" type="tns:Movie"/>
+        <parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" xmlns:pns="http://booking" qname="pns:date" type="tns:dateTime"/>
+      </operation>
+      <operation xmlns:operNS="http://booking" xmlns:retNS="http://booking" xmlns:rtns="http://booking" xmlns:tns="http://booking" name="getProjections" qname="operNS:getProjections" returnQName="retNS:getProjectionsReturn" returnType="rtns:ArrayOf_xsd_anyType" returnItemQName="tns:item" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://booking" name="saveSeats" qname="operNS:saveSeats" soapAction="">
+        <parameter xmlns:pns="http://booking" xmlns:tns="http://booking" qname="pns:movie" type="tns:Movie"/>
+        <parameter xmlns:pns="http://booking" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:date" type="tns:dateTime"/>
+        <parameter xmlns:pns="http://booking" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:projection" type="tns:int"/>
+        <parameter xmlns:pns="http://booking" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:seatsCount" type="tns:int"/>
+      </operation>
+      <parameter name="allowedMethods" value="getProjections getFreeSeatsCount saveSeats getAllMovieProjections getAllMoviesByDate"/>
+
+      <arrayMapping xmlns:ns="http://booking" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;getAllMovieProjections" type="java:booking.GetAllMovieProjections" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;getFreeSeatsCount" type="java:booking.GetFreeSeatsCount" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;saveSeatsResponse" type="java:booking.SaveSeatsResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;getFreeSeatsCountResponse" type="java:booking.GetFreeSeatsCountResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <arrayMapping xmlns:ns="http://booking" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_dateTime" type="java:java.util.Calendar[]" innerType="cmp-ns:dateTime" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:Movie" type="java:booking.Movie" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;getAllMoviesByDate" type="java:booking.GetAllMoviesByDate" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;saveSeats" type="java:booking.SaveSeats" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;getAllMoviesByDateResponse" type="java:booking.GetAllMoviesByDateResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;getProjections" type="java:booking.GetProjections" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;getProjectionsResponse" type="java:booking.GetProjectionsResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://booking" qname="ns:&gt;getAllMovieProjectionsResponse" type="java:booking.GetAllMovieProjectionsResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

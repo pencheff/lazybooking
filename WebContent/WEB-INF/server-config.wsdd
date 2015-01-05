@@ -1,0 +1,84 @@
+<ns1:deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" xmlns:ns1="http://xml.apache.org/axis/wsdd/">
+ <ns1:globalConfiguration>
+  <ns1:parameter name="sendMultiRefs" value="true"/>
+  <ns1:parameter name="disablePrettyXML" value="true"/>
+  <ns1:parameter name="adminPassword" value="admin"/>
+  <ns1:parameter name="attachments.Directory" value="E:\Projects\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\LazyBooking\WEB-INF\attachments"/>
+  <ns1:parameter name="dotNetSoapEncFix" value="true"/>
+  <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <ns1:parameter name="sendXMLDeclaration" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="session"/>
+   </ns1:handler>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="request"/>
+    <ns1:parameter name="extension" value=".jwr"/>
+   </ns1:handler>
+  </ns1:requestFlow>
+ </ns1:globalConfiguration>
+ <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <ns1:service name="AdminService" provider="java:MSG">
+  <ns1:parameter name="allowedMethods" value="AdminService"/>
+  <ns1:parameter name="enableRemoteAdmin" value="false"/>
+  <ns1:parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
+ </ns1:service>
+ <ns1:service name="Version" provider="java:RPC">
+  <ns1:parameter name="allowedMethods" value="getVersion"/>
+  <ns1:parameter name="className" value="org.apache.axis.Version"/>
+ </ns1:service>
+ <ns1:service name="BookingWebService" provider="java:RPC" style="document" use="literal">
+  <ns2:operation name="getFreeSeatsCount" qname="getFreeSeatsCount" returnQName="ns1:getFreeSeatsCountReturn" returnType="xsd:int" soapAction="" xmlns:ns1="http://booking" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:movie" type="ns1:Movie"/>
+   <ns2:parameter qname="ns1:date" type="xsd:dateTime"/>
+   <ns2:parameter qname="ns1:projection" type="xsd:int"/>
+  </ns2:operation>
+  <ns1:operation name="getAllMoviesByDate" qname="getAllMoviesByDate" returnItemQName="ns2:item" returnQName="ns2:getAllMoviesByDateReturn" returnType="ns2:ArrayOf_xsd_anyType" soapAction="" xmlns:ns2="http://booking">
+   <ns1:parameter qname="ns2:date1" type="xsd:dateTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="getAllMovieProjections" qname="getAllMovieProjections" returnItemQName="ns3:item" returnQName="ns3:getAllMovieProjectionsReturn" returnType="ns3:ArrayOf_xsd_anyType" soapAction="" xmlns:ns3="http://booking">
+   <ns1:parameter qname="ns3:movie1" type="ns3:Movie"/>
+   <ns1:parameter qname="ns3:date2" type="xsd:dateTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="getProjections" qname="getProjections" returnItemQName="ns4:item" returnQName="ns4:getProjectionsReturn" returnType="ns4:ArrayOf_xsd_anyType" soapAction="" xmlns:ns4="http://booking"/>
+  <ns1:operation name="saveSeats" qname="saveSeats" soapAction="">
+   <ns1:parameter qname="ns5:movie2" type="ns5:Movie" xmlns:ns5="http://booking"/>
+   <ns1:parameter qname="ns6:date3" type="xsd:dateTime" xmlns:ns6="http://booking" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns7:projection1" type="xsd:int" xmlns:ns7="http://booking" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+   <ns1:parameter qname="ns8:seatsCount" type="xsd:int" xmlns:ns8="http://booking" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="getProjections getFreeSeatsCount saveSeats getAllMovieProjections getAllMoviesByDate"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="BookingWebService"/>
+  <ns1:parameter name="className" value="booking.BookingWebService"/>
+  <ns1:parameter name="wsdlServicePort" value="BookingWebService"/>
+  <ns1:parameter name="schemaQualified" value="http://booking"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://booking"/>
+  <ns1:parameter name="wsdlServiceElement" value="BookingWebServiceService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns9:Movie" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:booking.Movie" xmlns:ns9="http://booking"/>
+  <ns1:arrayMapping innerType="xsd:anyType" languageSpecificType="java:java.lang.Object[]" qname="ns10:ArrayOf_xsd_anyType" xmlns:ns10="http://booking" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:arrayMapping innerType="xsd:dateTime" languageSpecificType="java:java.util.Calendar[]" qname="ns11:ArrayOf_xsd_dateTime" xmlns:ns11="http://booking" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ </ns1:service>
+ <ns1:transport name="http">
+  <ns1:requestFlow>
+   <ns1:handler type="URLMapper"/>
+   <ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </ns1:requestFlow>
+  <ns1:parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <ns1:parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </ns1:transport>
+ <ns1:transport name="local">
+  <ns1:responseFlow>
+   <ns1:handler type="LocalResponder"/>
+  </ns1:responseFlow>
+ </ns1:transport>
+</ns1:deployment>
